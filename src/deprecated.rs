@@ -403,7 +403,7 @@ impl RngCore for JitterRng {
 }
 
 impl JitterRng {
-    #[cfg(all(feature="std", not(target_arch = "wasm32")))]
+    #[cfg(all(feature="std", not(target_family = "wasm")))]
     pub fn new() -> Result<JitterRng, rngs::TimerError> {
         rngs::JitterRng::new().map(JitterRng)
     }

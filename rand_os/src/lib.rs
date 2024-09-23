@@ -133,10 +133,10 @@ pub extern crate rand_core;
 #[macro_use] extern crate log;
 
 // We have to do it here because we load macros
-#[cfg(all(target_arch = "wasm32", not(target_os = "emscripten"),
+#[cfg(all(target_family = "wasm", not(target_os = "emscripten"),
           feature = "wasm-bindgen"))]
 extern crate wasm_bindgen;
-#[cfg(all(target_arch = "wasm32", not(target_os = "emscripten"),
+#[cfg(all(target_family = "wasm", not(target_os = "emscripten"),
           not(feature = "wasm-bindgen"),
           feature = "stdweb"))]
 #[macro_use] extern crate stdweb;
@@ -316,7 +316,7 @@ mod_use!(cfg(target_env = "sgx"), sgx);
 
 mod_use!(
     cfg(all(
-        target_arch = "wasm32",
+        target_family = "wasm",
         not(target_os = "emscripten"),
         feature = "wasm-bindgen"
     )),
@@ -325,7 +325,7 @@ mod_use!(
 
 mod_use!(
     cfg(all(
-        target_arch = "wasm32",
+        target_family = "wasm",
         not(target_os = "emscripten"),
         not(feature = "wasm-bindgen"),
         feature = "stdweb",
@@ -335,7 +335,7 @@ mod_use!(
 
 /// Per #678 we use run-time failure where WASM bindings are missing
 #[cfg(all(
-    target_arch = "wasm32",
+    target_family = "wasm",
     not(target_os = "emscripten"),
     not(feature = "wasm-bindgen"),
     not(feature = "stdweb"),
@@ -379,14 +379,14 @@ mod imp {
     target_os = "solaris",
     target_os = "illumos",
     windows,
-    target_arch = "wasm32",
+    target_family = "wasm",
     target_env = "sgx"
 )))]
 compile_error!("OS RNG support is not available for this platform");
 
 // Due to rustwasm/wasm-bindgen#201 this can't be defined in the inner os
 // modules, so hack around it for now and place it at the root.
-#[cfg(all(feature = "wasm-bindgen", target_arch = "wasm32"))]
+#[cfg(all(feature = "wasm-bindgen", target_family = "wasm"))]
 #[doc(hidden)]
 #[allow(missing_debug_implementations)]
 pub mod __wbg_shims {
