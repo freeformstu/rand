@@ -316,7 +316,7 @@ mod_use!(cfg(target_env = "sgx"), sgx);
 
 mod_use!(
     cfg(all(
-        target_family = "wasm",
+        target_arch = "wasm32",
         not(target_os = "emscripten"),
         feature = "wasm-bindgen"
     )),
@@ -325,7 +325,7 @@ mod_use!(
 
 mod_use!(
     cfg(all(
-        target_family = "wasm",
+        target_arch = "wasm32",
         not(target_os = "emscripten"),
         not(feature = "wasm-bindgen"),
         feature = "stdweb",
@@ -335,7 +335,7 @@ mod_use!(
 
 /// Per #678 we use run-time failure where WASM bindings are missing
 #[cfg(all(
-    target_family = "wasm",
+    target_arch = "wasm32",
     not(target_os = "emscripten"),
     not(feature = "wasm-bindgen"),
     not(feature = "stdweb"),
@@ -379,7 +379,8 @@ mod imp {
     target_os = "solaris",
     target_os = "illumos",
     windows,
-    target_family = "wasm",
+    target_arch = "wasm32",
+    target_arch = "wasm64",
     target_env = "sgx"
 )))]
 compile_error!("OS RNG support is not available for this platform");
