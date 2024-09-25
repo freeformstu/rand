@@ -41,7 +41,7 @@ fn test_os_rng_huge() {
     r.fill_bytes(&mut huge);
 }
 
-#[cfg(not(any(target_arch = "wasm32", target_arch = "asmjs")))]
+#[cfg(not(any(target_family = "wasm", target_arch = "asmjs")))]
 #[test]
 fn test_os_rng_tasks() {
     use std::sync::mpsc::channel;

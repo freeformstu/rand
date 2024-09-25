@@ -166,7 +166,7 @@ impl Clone for JitterRng {
 }
 
 // Initialise to zero; must be positive
-#[cfg(all(feature = "std", not(target_arch = "wasm32")))]
+#[cfg(all(feature = "std", not(target_family = "wasm")))]
 static JITTER_ROUNDS: AtomicUsize = ATOMIC_USIZE_INIT;
 
 impl JitterRng {
@@ -177,9 +177,9 @@ impl JitterRng {
     /// During initialization CPU execution timing jitter is measured a few
     /// hundred times. If this does not pass basic quality tests, an error is
     /// returned. The test result is cached to make subsequent calls faster.
-    #[cfg(all(feature = "std", not(target_arch = "wasm32")))]
+    #[cfg(all(feature = "std", not(target_family = "wasm")))]
     pub fn new() -> Result<JitterRng, TimerError> {
-        if cfg!(target_arch = "wasm32") {
+        if cfg!(target_family = "wasm") {
             return Err(TimerError::NoTimer);
         }
         let mut state = JitterRng::new_with_timer(platform::get_nstime);

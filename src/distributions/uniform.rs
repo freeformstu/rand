@@ -1138,7 +1138,7 @@ mod tests {
 
     #[test]
     #[cfg(all(feature="std",
-              not(target_arch = "wasm32"),
+              not(target_family = "wasm"),
               not(target_arch = "asmjs")))]
     fn test_float_assertions() {
         use std::panic::catch_unwind;

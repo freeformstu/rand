@@ -214,11 +214,11 @@ type Os = NoSource;
 type Custom = NoSource;
 
 
-#[cfg(not(target_arch = "wasm32"))]
+#[cfg(not(target_family = "wasm"))]
 #[derive(Clone, Debug)]
 pub struct Jitter(rngs::JitterRng);
 
-#[cfg(not(target_arch = "wasm32"))]
+#[cfg(not(target_family = "wasm"))]
 impl EntropySource for Jitter {
     fn new_and_fill(dest: &mut [u8]) -> Result<Self, Error> {
         let mut rng = rngs::JitterRng::new()?;
@@ -231,7 +231,7 @@ impl EntropySource for Jitter {
     }
 }
 
-#[cfg(target_arch = "wasm32")]
+#[cfg(target_family = "wasm")]
 type Jitter = NoSource;
 
 
